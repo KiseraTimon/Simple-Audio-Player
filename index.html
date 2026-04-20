@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="player-card">
-        <!-- Left side column -->
+        <!-- Audio Selection -->
         <div class="left-panel">
             <div class="icon-header">
                 <div class="icon-block">
@@ -38,6 +38,66 @@
                     <span id="record-text">Record</span>
                     <div class="btn-icon" id="record-icon-wrap">🎙️</div>
                 </button>
+            </div>
+        </div>
+
+        <!-- Audio Info & Controls -->
+        <div class="right-panel">
+            <div class="close-icon">✕</div>
+            <div class="track-info">
+                <div class="info-header">
+                    <span class="sparkle-star">✨</span> Now Playing
+                </div>
+                <div class="marquee-container">
+                    <h3 id="track-name">No track selected</h3>
+                </div>
+                <p id="track-artist" class="metadata-text">Artist: Unknown</p>
+                <p id="track-features" class="metadata-text">Features: N/A</p>
+            </div>
+
+            <div class="player-controls-container">
+                <div class="time-slider-container">
+                    <span id="curr-time">0:00</span>
+                    <input type="range" id="seek-bar" value="0" min="0" max="100" step="any">
+                    <span id="dur-time">0:00</span>
+                </div>
+
+                <div class="bottom-controls">
+                    <!--Left Secondary Controls-->
+                    <div class="secondary-left">
+                        <button id="loop-btn" class="ctrl-btn sm-btn" title="Toggle Loop" style="color: #94A3B8;">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="loop-icon"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+                        </button>
+                        <button id="speed-btn" class="ctrl-btn sm-btn" title="Playback Speed" style="font-size: 14px; font-weight: 600; color: #94A3B8; min-width: 35px;">1x</button>
+                    </div>
+
+                    <!--Main Controls-->
+                    <div class="controls-row">
+                        <button id="prev-btn" class="ctrl-btn prev-next">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6H8V18H6V6ZM9.5 12L18 6V18L9.5 12Z"/></svg>
+                        </button>
+                        <button id="play-btn" class="ctrl-btn play-pause">
+                            <svg id="play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5V19L19 12L8 5Z"/></svg>
+                            <svg id="pause-icon" viewBox="0 0 24 24" fill="currentColor" style="display: none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                        </button>
+                        <button id="next-btn" class="ctrl-btn prev-next">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18L14.5 12L6 6V18ZM16 6V18H18V6H16Z"/></svg>
+                        </button>
+                    </div>
+
+                    <!--Right Secondary Controls-->
+                    <div class="volume-container">
+                        <svg id="mute-btn" class="vol-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="cursor: pointer;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                        <input type="range" id="vol-slider" min="0" max="1" step="0.01" value="1">
+                    </div>
+                </div>
+            </div>
+
+            <div class="decorative-arrow">
+                <svg width="40" height="40" viewBox="0 0 100 100" fill="none">
+                <path d="M10 90 Q 50 10, 90 20 M 70 10 L 90 20 L 80 40" stroke="#C4A87C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                </svg>
+                <p>Enjoy the music</p>
             </div>
         </div>
     </div>
