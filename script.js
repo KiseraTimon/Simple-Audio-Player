@@ -144,3 +144,51 @@ function pauseTrack() {
     playIcon.style.display = 'block';
     pauseIcon.style.display = 'none';
 }
+
+// Play Button
+playBtn.addEventListener('click', () => {
+    if (audioPlayer.paused) {
+        playTrack();
+    } else {
+        pauseTrack();
+    }
+});
+
+// Previous Track
+prevBtn.addEventListener('click', () => {
+    if (tracks.length === 0) return;
+    let nextIndex = currentTrackIndex - 1;
+    if (nextIndex < 0) nextIndex = tracks.length - 1;
+    loadTrack(nextIndex);
+    playTrack();
+});
+
+// Next Track
+function playNext() {
+    if (tracks.length === 0) return;
+    let nextIndex = currentTrackIndex + 1;
+    if (nextIndex >= tracks.length) nextIndex = 0;
+    loadTrack(nextIndex);
+    playTrack();
+}
+
+nextBtn.addEventListener('click', playNext);
+audioPlayer.addEventListener('ended', playNext);
+
+
+// Audio Player Seek Bar
+audioPlayer.addEventListener('loadedmetadata', () => {
+    durTimeEl.textContent = formatTime(audioPlayer.duration);
+    seekBar.max = audioPlayer.duration;
+});
+
+audioPlayer.addEventListener('timeupdate', () => {
+    if (!isNaN(audioPlayer.duration)) {
+        seekBar.value = audioPlayer.currentTime;
+        currTimeEl.textContent = formatTime(audioPlayer.currentTime);
+
+        // Update gradient visually
+        const percentage = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        updateSeekBarGradient(percentage);
+    }
+});
