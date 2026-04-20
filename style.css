@@ -13,6 +13,16 @@ body {
     min-height: 100vh;
 }
 
+.player-card {
+    width: 960px;
+    height: 520px;
+    background-color: #FFFFFF;
+    border-radius: 24px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.05);
+    display: flex;
+    overflow: hidden;
+}
+
 /* Left Panel */
 .left-panel {
     flex: 1;
