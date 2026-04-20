@@ -240,3 +240,19 @@ speedBtn.addEventListener('click', () => {
         speedBtn.style.color = '#94A3B8';
     }
 });
+
+// Mute & Volume Control
+let previousVolume = 1;
+
+muteBtn.addEventListener('click', () => {
+    if (audioPlayer.volume > 0) {
+        previousVolume = audioPlayer.volume;
+        audioPlayer.volume = 0;
+        volSlider.value = 0;
+        muteBtn.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>';
+    } else {
+        audioPlayer.volume = previousVolume > 0 ? previousVolume : 1;
+        volSlider.value = audioPlayer.volume;
+        muteBtn.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>';
+    }
+});
