@@ -311,7 +311,8 @@ recordBtn.addEventListener('click', async () => {
                 option.text = `You - ${recordedName}`;
                 trackSelect.appendChild(option);
 
-                audioChunks = []; // reset for next time
+                // Reseting chunks for next time
+                audioChunks = [];
             };
 
             mediaRecorder.start();
