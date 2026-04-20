@@ -170,3 +170,97 @@ select#track-select:focus {
 .outline-btn .btn-icon {
     background-color: rgba(100, 116, 139, 0.1);
 }
+
+/* Right Panel */
+.right-panel {
+    flex: 1.15;
+    background-color: #FFF2DF;
+    /* Peach hue like template */
+    margin: 16px 16px 16px 0;
+    border-radius: 20px;
+    padding: 50px 45px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.close-icon {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-size: 18px;
+    color: #A09A8F;
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.close-icon:hover {
+    opacity: 1;
+}
+
+.track-info {
+    margin-bottom: 25px;
+    padding-top: 10px;
+}
+
+.info-header {
+    font-size: 15px;
+    color: #1A1A1A;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.sparkle-star {
+    color: #F89E19;
+    font-size: 20px;
+}
+
+.marquee-container {
+    width: 100%;
+    max-width: 360px;
+    /* Constrain width to prevent distortion */
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    margin-bottom: 15px;
+    /* Soft fade effect on the right edge */
+    -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+    mask-image: linear-gradient(to right, black 85%, transparent 100%);
+}
+
+.track-info h3 {
+    font-size: 28px;
+    color: #1A1A1A;
+    font-weight: 600;
+    display: inline-block;
+    white-space: nowrap;
+    padding-right: 20px;
+    /* buffer at end of scroll */
+}
+
+.scroll-text {
+    animation: scroll-bounce var(--scroll-duration, 5s) linear infinite alternate;
+}
+
+@keyframes scroll-bounce {
+
+    0%,
+    15% {
+        transform: translateX(0);
+    }
+
+    85%,
+    100% {
+        transform: translateX(var(--scroll-amount));
+    }
+}
+
+.metadata-text {
+    font-size: 15px;
+    color: #6B655B;
+    margin-bottom: 6px;
+    font-weight: 400;
+}
