@@ -49,9 +49,51 @@ fileUpload.addEventListener('change', (e) => {
     }
 });
 
+// Track selection from dropdown
 trackSelect.addEventListener('change', (e) => {
     const index = parseInt(e.target.value, 10);
     if (isNaN(index)) return;
     loadTrack(index);
     playTrack();
 });
+
+// Track Loader
+function loadTrack(index) {
+    if (index < 0 || index >= tracks.length) return;
+    currentTrackIndex = index;
+    const track = tracks[index];
+
+    audioPlayer.src = track.url;
+    audioPlayer.load();
+
+    trackName.textContent = track.name;
+    trackArtist.textContent = `Artist: ${track.artist}`;
+    trackFeatures.textContent = `Features: ${track.features}`;
+
+    trackSelect.value = index;
+
+    // UI reset
+    seekBar.value = 0;
+    currTimeEl.textContent = "0:00";
+    durTimeEl.textContent = "0:00";
+    updateSeekBarGradient(0);
+
+    // Handling conditional marquee
+    trackName.classList.remove('scroll-text');
+
+    setTimeout(() => {
+        const containerWidth = trackName.parentElement.clientWidth;
+        const textWidth = trackName.scrollWidth;
+
+        if (textWidth > containerWidth) {
+            const overflow = textWidth - containerWidth;
+            trackName.style.setProperty('--scroll-amount', `-${overflow + 20}px`);
+
+            // Duration adjustments based on length (for consistent scroll speed)
+            const duration = Math.max(4, (overflow / 40) + 3);
+            trackName.style.setProperty('--scroll-duration', `${duration}s`);
+
+            trackName.classList.add('scroll-text');
+        }
+    }, 10);
+}
