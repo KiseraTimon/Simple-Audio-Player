@@ -4,6 +4,34 @@ const trackName = document.getElementById('track-name');
 const trackArtist = document.getElementById('track-artist');
 const trackFeatures = document.getElementById('track-features');
 
+const playBtn = document.getElementById('play-btn');
+const playIcon = document.getElementById('play-icon');
+const pauseIcon = document.getElementById('pause-icon');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+
+const seekBar = document.getElementById('seek-bar');
+const currTimeEl = document.getElementById('curr-time');
+const durTimeEl = document.getElementById('dur-time');
+
+// New elements
+const volSlider = document.getElementById('vol-slider');
+const recordBtn = document.getElementById('record-btn');
+const recordText = document.getElementById('record-text');
+const recordIconWrap = document.getElementById('record-icon-wrap');
+
+const muteBtn = document.getElementById('mute-btn');
+const loopBtn = document.getElementById('loop-btn');
+const speedBtn = document.getElementById('speed-btn');
+
+let mediaRecorder;
+let audioChunks = [];
+let isRecording = false;
+
+let audioPlayer = new Audio();
+let tracks = [];
+let currentTrackIndex = -1;
+
 
 // Defaults
 trackSelect.innerHTML = '<option value="" disabled selected>Select a track to play...</option>';
@@ -108,4 +136,11 @@ function playTrack() {
     audioPlayer.play();
     playIcon.style.display = 'none';
     pauseIcon.style.display = 'block';
+}
+
+// Track pause
+function pauseTrack() {
+    audioPlayer.pause();
+    playIcon.style.display = 'block';
+    pauseIcon.style.display = 'none';
 }
