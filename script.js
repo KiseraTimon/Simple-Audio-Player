@@ -97,3 +97,15 @@ function loadTrack(index) {
         }
     }, 10);
 }
+
+// Track player
+function playTrack() {
+    if (currentTrackIndex === -1 && tracks.length > 0) {
+        loadTrack(0);
+    }
+    if (currentTrackIndex === -1) return;
+
+    audioPlayer.play();
+    playIcon.style.display = 'none';
+    pauseIcon.style.display = 'block';
+}
