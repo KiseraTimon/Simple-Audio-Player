@@ -9,6 +9,38 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="player-card">
+        <!-- Left side column -->
+        <div class="left-panel">
+            <div class="icon-header">
+                <div class="icon-block">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L14 9L21 11L14 13L12 20L10 13L3 11L10 9L12 2Z" fill="#1DA1F2"/></svg>
+                </div>
+            </div>
+            <h2>Simple<br>Audio Player</h2>
+            <p class="description">
+                Load your favorite MP3 files and enjoy a sleek audio experience right from your browser. Use the dropdown below to switch/view tracks seamlessly.
+            </p>
+            <div class="dropdown-wrapper">
+                <select id="track-select">
+                <option value="" disabled selected>Select a track to play...</option>
+                </select>
+                <div class="dropdown-arrow">▼</div>
+            </div>
+            <div class="action-buttons">
+                <label for="file-upload" class="action-btn orange-btn">
+                    <span>Load MP3s</span>
+                    <div class="btn-icon">⚡</div>
+                    <input type="file" id="file-upload" accept=".mp3,audio/mpeg,audio/wav" multiple style="display: none;">
+                </label>
+
+                <button id="record-btn" class="action-btn outline-btn">
+                    <span id="record-text">Record</span>
+                    <div class="btn-icon" id="record-icon-wrap">🎙️</div>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
