@@ -36,6 +36,60 @@ let currentTrackIndex = -1;
 // Defaults
 trackSelect.innerHTML = '<option value="" disabled selected>Select a track to play...</option>';
 
+// Auto-detection for files inside the "audio/" folder
+async function autoDetectAudioFolder() {
+    try {
+        const response = await fetch('audio/');
+        if (!response.ok) return;
+
+        const text = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(text, 'text/html');
+        const links = Array.from(doc.querySelectorAll('a'));
+
+        let loadedTracks = false;
+
+        links.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href.endsWith('.mp3')) {
+                loadedTracks = true;
+                const fileName = decodeURIComponent(href).split('/').pop();
+
+                let name = fileName.replace(/\.[^/.]+$/, "");
+                let artist = "Unknown Artist";
+
+                if (name.includes(' - ')) {
+                    const parts = name.split(' - ');
+                    artist = parts[0].trim();
+                    name = parts.slice(1).join(' - ').trim();
+                }
+
+                tracks.push({
+                    name: name,
+                    artist: artist,
+                    features: "Local Directory",
+                    url: `audio/${fileName}`
+                });
+
+                const option = document.createElement('option');
+                option.value = tracks.length - 1;
+                option.text = `${artist !== "Unknown Artist" ? artist + " - " : ""}${name}`;
+                trackSelect.appendChild(option);
+            }
+        });
+
+        // UI trigger on folder content update
+        if (loadedTracks && currentTrackIndex === -1) {
+            trackSelect.value = "0";
+            loadTrack(0);
+        }
+    } catch (e) {
+        console.warn("Auto-detection bounded natively by file:// execution protocol sandboxes.");
+    }
+}
+
+autoDetectAudioFolder();
+
 
 // File Upload Logic
 fileUpload.addEventListener('change', (e) => {
@@ -228,6 +282,7 @@ loopBtn.addEventListener('click', () => {
 // Playback Speed Control
 let playbackSpeeds = [1, 1.25, 1.5, 2, 0.5];
 let currentSpeedIndex = 0;
+
 speedBtn.addEventListener('click', () => {
     currentSpeedIndex = (currentSpeedIndex + 1) % playbackSpeeds.length;
     let newSpeed = playbackSpeeds[currentSpeedIndex];
@@ -333,4 +388,3 @@ recordBtn.addEventListener('click', async () => {
         recordIconWrap.classList.remove("recording-pulse");
     }
 });
-
