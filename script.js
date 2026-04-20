@@ -212,3 +212,15 @@ function formatTime(seconds) {
     const secs = Math.floor(seconds % 60);
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
 }
+
+// Loop Control
+loopBtn.addEventListener('click', () => {
+    audioPlayer.loop = !audioPlayer.loop;
+    if (audioPlayer.loop) {
+        // Active color
+        loopBtn.style.color = '#5BB4FF';
+    } else {
+        // Inactive color
+        loopBtn.style.color = '#94A3B8';
+    }
+});
