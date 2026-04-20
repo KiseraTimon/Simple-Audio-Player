@@ -37,52 +37,44 @@ let currentTrackIndex = -1;
 trackSelect.innerHTML = '<option value="" disabled selected>Select a track to play...</option>';
 
 // Auto-detection for files inside the "audio/" folder via JSON manifest
-async function autoDetectAudioFolder() {
-    try {
-        const response = await fetch('audio/tracks.json');
-        if (!response.ok) return;
+const response = await fetch('./audio/tracks.json');
+if (!response.ok) {
+    console.error(`HTTP error! status: ${response.status}`);
+    return;
+}
 
-        const files = await response.json();
-        if (!Array.isArray(files) || files.length === 0) return;
+const files = await response.json();
+if (!Array.isArray(files) || files.length === 0) return;
 
-        let loadedTracks = false;
+let loadedTracks = false;
 
-        files.forEach(fileName => {
-            if (fileName && fileName.endsWith('.mp3')) {
-                loadedTracks = true;
+files.forEach(fileName => {
+    if (fileName && fileName.endsWith('.mp3')) {
+        loadedTracks = true;
 
-                let name = fileName.replace(/\.[^/.]+$/, "");
-                let artist = "Unknown Artist";
+        let name = fileName.replace(/\.[^/.]+$/, "");
+        let artist = "Unknown Artist";
 
-                if (name.includes(' - ')) {
-                    const parts = name.split(' - ');
-                    artist = parts[0].trim();
-                    name = parts.slice(1).join(' - ').trim();
-                }
+        if (name.includes(' - ')) {
+            const parts = name.split(' - ');
+            artist = parts[0].trim();
+            name = parts.slice(1).join(' - ').trim();
+        }
 
-                tracks.push({
-                    name: name,
-                    artist: artist,
-                    features: "Local Directory",
-                    url: `audio/${fileName}`
-                });
+        tracks.push({
+            name: name,
+            artist: artist,
+            features: "Local Directory",
 
-                const option = document.createElement('option');
-                option.value = tracks.length - 1;
-                option.text = `${artist !== "Unknown Artist" ? artist + " - " : ""}${name}`;
-                trackSelect.appendChild(option);
-            }
+            url: `./audio/${fileName}`
         });
 
-        // UI trigger on folder content update
-        if (loadedTracks && currentTrackIndex === -1) {
-            trackSelect.value = "0";
-            loadTrack(0);
-        }
-    } catch (e) {
-        console.warn("Auto-detection bounded natively by file:// execution protocol sandboxes.");
+        const option = document.createElement('option');
+        option.value = tracks.length - 1;
+        option.text = `${artist !== "Unknown Artist" ? artist + " - " : ""}${name}`;
+        trackSelect.appendChild(option);
     }
-}
+});
 
 autoDetectAudioFolder();
 
