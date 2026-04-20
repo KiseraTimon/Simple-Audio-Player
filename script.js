@@ -192,3 +192,23 @@ audioPlayer.addEventListener('timeupdate', () => {
         updateSeekBarGradient(percentage);
     }
 });
+
+seekBar.addEventListener('input', () => {
+    if (isNaN(audioPlayer.duration)) return;
+    audioPlayer.currentTime = seekBar.value;
+    const percentage = (seekBar.value / audioPlayer.duration) * 100;
+    updateSeekBarGradient(percentage);
+});
+
+function updateSeekBarGradient(percentage) {
+    if (isNaN(percentage)) percentage = 0;
+    // Gradient update so it looks like the blue color fills the slider track from left to right
+    seekBar.style.background = `linear-gradient(to right, #5BB4FF 0%, #5BB4FF ${percentage}%, #E2E8F0 ${percentage}%, #E2E8F0 100%)`;
+}
+
+function formatTime(seconds) {
+    if (isNaN(seconds) || seconds === Infinity) return "0:00";
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+}
