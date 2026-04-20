@@ -224,3 +224,19 @@ loopBtn.addEventListener('click', () => {
         loopBtn.style.color = '#94A3B8';
     }
 });
+
+// Playback Speed Control
+let playbackSpeeds = [1, 1.25, 1.5, 2, 0.5];
+let currentSpeedIndex = 0;
+speedBtn.addEventListener('click', () => {
+    currentSpeedIndex = (currentSpeedIndex + 1) % playbackSpeeds.length;
+    let newSpeed = playbackSpeeds[currentSpeedIndex];
+    audioPlayer.playbackRate = newSpeed;
+    speedBtn.textContent = newSpeed + 'x';
+
+    if (newSpeed !== 1) {
+        speedBtn.style.color = '#5BB4FF';
+    } else {
+        speedBtn.style.color = '#94A3B8';
+    }
+});
