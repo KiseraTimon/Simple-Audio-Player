@@ -36,24 +36,20 @@ let currentTrackIndex = -1;
 // Defaults
 trackSelect.innerHTML = '<option value="" disabled selected>Select a track to play...</option>';
 
-// Auto-detection for files inside the "audio/" folder
+// Auto-detection for files inside the "audio/" folder via JSON manifest
 async function autoDetectAudioFolder() {
     try {
-        const response = await fetch('audio/');
+        const response = await fetch('audio/tracks.json');
         if (!response.ok) return;
 
-        const text = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(text, 'text/html');
-        const links = Array.from(doc.querySelectorAll('a'));
+        const files = await response.json();
+        if (!Array.isArray(files) || files.length === 0) return;
 
         let loadedTracks = false;
 
-        links.forEach(link => {
-            const href = link.getAttribute('href');
-            if (href && href.endsWith('.mp3')) {
+        files.forEach(fileName => {
+            if (fileName && fileName.endsWith('.mp3')) {
                 loadedTracks = true;
-                const fileName = decodeURIComponent(href).split('/').pop();
 
                 let name = fileName.replace(/\.[^/.]+$/, "");
                 let artist = "Unknown Artist";
