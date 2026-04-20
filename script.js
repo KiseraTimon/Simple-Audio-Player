@@ -280,3 +280,56 @@ document.addEventListener('keydown', (e) => {
         prevBtn.click();
     }
 });
+
+// Recording Logic
+recordBtn.addEventListener('click', async () => {
+    if (!isRecording) {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+
+            mediaRecorder.ondataavailable = event => {
+                if (event.data.size > 0) {
+                    audioChunks.push(event.data);
+                }
+            };
+
+            mediaRecorder.onstop = () => {
+                const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                const audioUrl = URL.createObjectURL(audioBlob);
+                const recordedName = `Recorded Audio - ${new Date().toLocaleTimeString()}`;
+
+                tracks.push({
+                    name: recordedName,
+                    artist: "You",
+                    features: "Voice Recording",
+                    url: audioUrl
+                });
+
+                const option = document.createElement('option');
+                option.value = tracks.length - 1;
+                option.text = `You - ${recordedName}`;
+                trackSelect.appendChild(option);
+
+                audioChunks = []; // reset for next time
+            };
+
+            mediaRecorder.start();
+            isRecording = true;
+
+            recordText.textContent = "Stop";
+            recordIconWrap.classList.add("recording-pulse");
+        } catch (err) {
+            alert('Microphone access denied or not available.');
+            console.error(err);
+        }
+    } else {
+        mediaRecorder.stop();
+        mediaRecorder.stream.getTracks().forEach(track => track.stop());
+        isRecording = false;
+
+        recordText.textContent = "Record";
+        recordIconWrap.classList.remove("recording-pulse");
+    }
+});
+
